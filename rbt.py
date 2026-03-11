@@ -107,7 +107,6 @@ class RBNode:
         return new_root
 
 
-
 class RBTree:
 
     def __init__(self):
@@ -149,13 +148,44 @@ class RBTree:
             else:
                 self.__insert(node.right, value)
 
-    # def fix(self, node):
-    #     #You may alter code in this method if you wish, it's merely a guide.
-    #     if node.parent == None:
-    #         node.make_black()
-    #     while node != None and node.parent != None and node.parent.is_red(): 
-    #         #TODO
-    #     self.root.make_black()
+#--------------------------------------------------------------------------------------------------
+# Implemented by : Emre Bozkurt
+    def fix(self, node):
+        #You may alter code in this method if you wish, it's merely a guide.
+        if node.parent == None:
+            node.make_black()
+        while node != None and node.parent != None and node.parent.is_red(): 
+            if node.parent.is_left_child():
+                uncle = node.parent.get_uncle()
+                if uncle != None and uncle.is_red():
+                    node.parent.make_black()
+                    uncle.make_black()
+                    node.parent.parent.make_red()
+                    node = node.parent.parent
+                else:
+                    if node.is_right_child():
+                        node = node.parent
+                        node.rotate_left()
+                    node.parent.make_black()
+                    node.parent.parent.make_red()
+                    node.parent.parent.rotate_right()
+            else:
+                uncle = node.parent.get_uncle()
+                if uncle != None and uncle.is_red():
+                    node.parent.make_black()
+                    uncle.make_black()
+                    node.parent.parent.make_red()
+                    node = node.parent.parent
+                else:
+                    if node.is_left_child():
+                        node = node.parent
+                        node.rotate_right()
+                    node.parent.make_black()
+                    node.parent.parent.make_red()
+                    node.parent.parent.rotate_left()
+        self.root.make_black()
+#--------------------------------------------------------------------------------------------------
+
                     
         
     def __str__(self):
