@@ -32,6 +32,8 @@ class RBNode:
         self.colour = "R"
 
     def get_brother(self):
+        if self.parent == None:
+            return None
         if self.parent.right == self:
             return self.parent.left
         return self.parent.right
@@ -156,7 +158,7 @@ class RBTree:
             node.make_black()
         while node != None and node.parent != None and node.parent.is_red(): 
             if node.parent.is_left_child():
-                uncle = node.parent.get_uncle()
+                uncle = node.get_uncle()
                 if uncle != None and uncle.is_red():
                     node.parent.make_black()
                     uncle.make_black()
@@ -170,7 +172,7 @@ class RBTree:
                     node.parent.parent.make_red()
                     node.parent.parent.rotate_right()
             else:
-                uncle = node.parent.get_uncle()
+                uncle = node.get_uncle()
                 if uncle != None and uncle.is_red():
                     node.parent.make_black()
                     uncle.make_black()
