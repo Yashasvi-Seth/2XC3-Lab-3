@@ -9,4 +9,8 @@ class XCThreeTree:
 
     def nodes(self):
         return 1 + sum(child.nodes() for child in self.children)
-    # TODO: (Exp 3) Yash, build the height method, figure out a pattern, and derive a formula
+
+    def height(self):
+        if not self.children:
+            return 0
+        return 1 + max(child.height() for child in self.children)
