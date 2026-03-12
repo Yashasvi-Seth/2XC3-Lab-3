@@ -9,7 +9,7 @@ class BSTNode:
 
     #function to check if node is a leaf node
     def is_leaf(self):
-        return self.left is None and self.right is None
+        return self.left == None and self.right == None
 
 #class for the actual BST
 class BST:
@@ -18,7 +18,7 @@ class BST:
 
     #function that checks if the BST is empty
     def is_empty(self):
-        return self.root is None
+        return self.root == None
 
     #function that inserts a value into the BST
     def insert(self, value):
@@ -30,26 +30,29 @@ class BST:
             while True:
                 #if the value to be inserted is less than the current node's value, go left, otherwise go right
                 if value<current.value:
-                    if current.left is None:
+                    if current.left == None:
                         current.left = BSTNode(value)
                         break
                     current = current.left
                 else:
-                    if current.right is None:
+                    if current.right == None:
                         current.right = BSTNode(value)
                         break
                     current = current.right
 
     #function that calculates the height of the BST
     def get_height(self):
+        #if the tree is empty return 0
         if self.is_empty():
             return 0
-        return self.__get_height(self.root)
-
-    #calculates height of the BST in a recursive manner
-    def __get_height(self, node):
-        if node is None:
-            return 0
-        left_height = self.__get_height(node.left)
-        right_height = self.__get_height(node.right)
-        return 1 + max(left_height, right_height)
+        #use a stack to do a depth first traversal of the tree and keep track of the maximum depth reached
+        stack = [(self.root, 1)]
+        maxHeight = 0
+        #if there is a node on the stack, pop it and add its children to the stack with their corresponding depth (current depth + 1)
+        while stack:
+            node, depth = stack.pop()
+            if node != None:
+                maxHeight = max(maxHeight, depth)
+                stack.append((node.left, depth + 1))
+                stack.append((node.right, depth + 1))
+        return maxHeight
