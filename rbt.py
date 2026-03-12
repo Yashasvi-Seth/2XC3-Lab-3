@@ -183,6 +183,8 @@ class RBTree:
                     node.parent.make_black()
                     node.parent.parent.make_red()
                     node.parent.parent.rotate_left()
+        while self.root.parent != None:
+            self.root = self.root.parent
         self.root.make_black()
 #--------------------------------------------------------------------------------------------------          
 
